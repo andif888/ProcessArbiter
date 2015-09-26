@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{858D08A0-BEFC-431F-84A6-80FBCACA8FAE}"
+	ProjectSection(SolutionItems) = preProject
+		SharedAssemblyFileVersionInfo.cs = SharedAssemblyFileVersionInfo.cs
+		SharedAssemblyInfo.cs = SharedAssemblyInfo.cs
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessArbiterService", "ProcessArbiterService\ProcessArbiterService.csproj", "{CB56A886-C08E-4E4C-9FBB-1266B937BA88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessArbiterLibrary", "ProcessArbiterLibrary\ProcessArbiterLibrary.csproj", "{2676B1D6-D3D8-4383-9313-27AA6FBB736F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessArbiterStatusClient", "ProcessArbiterStatusClient\ProcessArbiterStatusClient.csproj", "{38E73D92-6BF5-407F-BD41-D901E6BB511B}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ProcessArbiterSetup", "ProcessArbiterSetup\ProcessArbiterSetup.vdproj", "{ED36970C-B107-4EBF-9531-0242769D6A90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessArbiterResourceHog", "ProcessArbiterResourceHog\ProcessArbiterResourceHog.csproj", "{764437AF-D979-401C-BE4A-B958162048FE}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ProcessArbiterSetup-x64", "ProcessArbiterSetup-x64\ProcessArbiterSetup-x64.vdproj", "{8DB88036-CCC0-4C49-99B9-12E6640C5814}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CB56A886-C08E-4E4C-9FBB-1266B937BA88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB56A886-C08E-4E4C-9FBB-1266B937BA88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB56A886-C08E-4E4C-9FBB-1266B937BA88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB56A886-C08E-4E4C-9FBB-1266B937BA88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2676B1D6-D3D8-4383-9313-27AA6FBB736F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2676B1D6-D3D8-4383-9313-27AA6FBB736F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2676B1D6-D3D8-4383-9313-27AA6FBB736F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2676B1D6-D3D8-4383-9313-27AA6FBB736F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38E73D92-6BF5-407F-BD41-D901E6BB511B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38E73D92-6BF5-407F-BD41-D901E6BB511B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38E73D92-6BF5-407F-BD41-D901E6BB511B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38E73D92-6BF5-407F-BD41-D901E6BB511B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED36970C-B107-4EBF-9531-0242769D6A90}.Debug|Any CPU.ActiveCfg = Debug
+		{ED36970C-B107-4EBF-9531-0242769D6A90}.Release|Any CPU.ActiveCfg = Release
+		{764437AF-D979-401C-BE4A-B958162048FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{764437AF-D979-401C-BE4A-B958162048FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{764437AF-D979-401C-BE4A-B958162048FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{764437AF-D979-401C-BE4A-B958162048FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DB88036-CCC0-4C49-99B9-12E6640C5814}.Debug|Any CPU.ActiveCfg = Debug
+		{8DB88036-CCC0-4C49-99B9-12E6640C5814}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+EndGlobal

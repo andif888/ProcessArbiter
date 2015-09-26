@@ -1,0 +1,80 @@
+<HTML xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<!--
+/* 
+ * $URL$
+ * $Author$
+ * $Date$
+ * $Rev$
+ * $Id$
+ */
+-->
+	<HEAD>
+		<TITLE>Using ProcessArbiter</TITLE>
+		<meta name="vs_targetSchema" content="HTML 4.0">
+		<link rel="stylesheet" type="text/css" href="scripts/dtue.css" />
+	</HEAD>
+	<BODY topmargin="0" id="bodyID" class="dtBODY"> <!--NONSCROLLING BANNER START-->
+		<div id="nsbanner">
+			<div id="bannerrow1">
+				<TABLE class="bannerparthead" id="Table1" cellSpacing="0">
+					<TR id="hdr">
+						<TD class="runninghead" noWrap>Using ProcessArbiter</TD>
+						<TD class="product" noWrap>&nbsp;</TD>
+					</TR>
+				</TABLE>
+			</div>
+			<div id="TitleRow">
+				<H1 class="dtH1">ProcessArbiter Status Client</H1>
+			</div>
+		</div>
+		<!--NONSCROLLING BANNER END-->
+		<DIV id="nstext" valign="bottom">
+			<div id="allHistory" class="saveHistory" onsave="saveAll()" onload="loadAll()"></div>
+			<DIV id="smpMgrCell" style="FLOAT:right;WIDTH:230px"></DIV> <!---->
+			<!-- Insert HTML here -->
+			<P>&nbsp;</P>
+			<P>The image below shows <STRONG>ProcessArbiter Status Client</STRONG>.</P>
+			<p>Here you can <strong>check the status</strong> and <strong>start</strong> and <strong>stop</strong> the service.<br />
+				When you run the Status Client the first time after installation you are prompted to enter 
+				your license details or automatically request an evaluation license. After that you can start 
+				the service and your configuration is done. By default the service is configured to run automatically when windows starts.</P>
+			<p>This means, the Status Client is more or less for information purpose and to see what's going on under the hood. 
+			ProcessArbiter is simply doing its job fully automated without any complicated configuration you have to care about. 
+			This is one of the big benefits of ProcessArbiter</p>
+			<P>&nbsp;</P>
+			<P><img alt="" src="images/shot-config-1.jpg" /></P>
+			<P>&nbsp;</P>
+			<h2>Test ProcessArbiter by generating CPU load</h2>
+			<p>ProcessArbiter comes with a little tool which allows you to 
+			to put some load on your CPU and to see how all the stuff works.<br />&nbsp;</p>
+			<P><img alt="" src="images/shot-config-2.jpg" /></P>
+			<p>&nbsp;</p>
+			<p><strong>CPU Load test with ProcessArbiter disabled</strong></p>
+			<ol>
+				<li>Make sure ProcessArbiter Service is stopped.</li>
+				<li>Run Windows Task Manager to see the current CPU utilization.</li>
+				<li>Click on <strong>Action &gt; Run new instance of CPU Resource Hog</strong> menu to start the CPU Resource Hog application.</li>
+				<li>Put some load on your CPU by clicking <strong>Start</strong> button in CPU Resource Hog.<br />(To put more load on the CPU you can run multible instances of CPU Resource Hog simultaniously.)</li>
+				<li>While your CPU gets exhausted, try to start any other application. For example Internet Explorer, Mozilla Firefox or your favorite email application.</li>
+				<li>Notice the time, how long it takes until your application is up and running.</li>
+				<li>Now do the same test while ProcessArbiter is enabled. The steps are outlined below.</li>
+			</ol>
+			<p>&nbsp;</p>
+			<p><strong>CPU Load test with ProcessArbiter enabled</strong></p>
+			<ol>
+				<li>Make sure ProcessArbiter Service is started.</li>
+				<li>Run Windows Task Manager to see the current CPU utilization.</li>
+				<li>Click on <strong>Action &gt; Run new instance of CPU Resource Hog</strong> menu to start the CPU Resource Hog application.</li>
+				<li>Put some load on your CPU by clicking <strong>Start</strong> button in CPU Resource Hog.<br />(To put more load on the CPU you can run multible instances of CPU Resource Hog simultaniously.)</li>
+				<li>While your CPU gets exhausted, try to start any other application. For example Internet Explorer, Mozilla Firefox or your favorite email application.</li>
+				<li>Notice the time, how long it takes until your application is up and running.</li>
+				<li>Now you will notice a significant faster load of your application in this test when ProcessArbiter is enabled.</li>
+			</ol>
+
+			<P>&nbsp;</P>
+			<!--Footer Start-->
+			<div class="footer"></div> <!--Closes the footer div-->
+		</div> <!--closes the topic content div-->
+		<!--FOOTER_END-->
+	</BODY>
+</HTML>
