@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{858D08A0-BEFC-431F-84A6-80FBCACA8FAE}"
 	ProjectSection(SolutionItems) = preProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessArbiterResourceHog", "ProcessArbiterResourceHog\ProcessArbiterResourceHog.csproj", "{764437AF-D979-401C-BE4A-B958162048FE}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ProcessArbiterSetup-x64", "ProcessArbiterSetup-x64\ProcessArbiterSetup-x64.vdproj", "{8DB88036-CCC0-4C49-99B9-12E6640C5814}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessArbiter-Tst", "ProcessArbiter-Tst\ProcessArbiter-Tst.csproj", "{B7770369-B57E-4196-8064-FB820BD5E4AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{764437AF-D979-401C-BE4A-B958162048FE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8DB88036-CCC0-4C49-99B9-12E6640C5814}.Debug|Any CPU.ActiveCfg = Debug
 		{8DB88036-CCC0-4C49-99B9-12E6640C5814}.Release|Any CPU.ActiveCfg = Release
+		{B7770369-B57E-4196-8064-FB820BD5E4AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7770369-B57E-4196-8064-FB820BD5E4AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7770369-B57E-4196-8064-FB820BD5E4AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7770369-B57E-4196-8064-FB820BD5E4AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

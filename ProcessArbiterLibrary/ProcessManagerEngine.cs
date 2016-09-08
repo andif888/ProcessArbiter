@@ -1,10 +1,10 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 
 namespace ProcessArbiter
 {
@@ -17,9 +17,21 @@ namespace ProcessArbiter
         private int _numberOfProcessors = 1;
 
         private ProcessPolicy _policy = null;
-        private List<string> _ignoredProcessNames = new List<string>();
         private Dictionary<int, PerfManagedProcess> _managedProcesses = new Dictionary<int, PerfManagedProcess>();
         private EventLog _eventLog = null;
+        private bool _UsePolicyConfig = false;
+        public bool UsePolicyConfig
+        {
+            get
+            {
+                return _UsePolicyConfig;
+            }
+            set
+            {
+                _UsePolicyConfig = value;
+            }
+        }
+        private string _Settings = "";
         private System.Timers.Timer _cleanupTimer;
 
         public bool Simulate
@@ -29,14 +41,15 @@ namespace ProcessArbiter
         }
 
 
-        
+
         public ProcessManagerEngine(EventLog eventLog)
         {
             _numberOfProcessors = Environment.ProcessorCount;
+            _Settings = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Settings.xml";
             _eventLog = eventLog;
             _cleanupTimer = new System.Timers.Timer(Properties.Settings.Default.CleanupTimeInterval);
             _cleanupTimer.Elapsed += new System.Timers.ElapsedEventHandler(CleanupTimer_Elapsed);
-            
+
 
 
         }
@@ -48,58 +61,79 @@ namespace ProcessArbiter
             _cleanupTimer.Start();
         }
 
-        
-        private void InitIgnoreProcesses()
-        {
-            _ignoredProcessNames.Clear();
 
+        private List<string> InitIgnoreProcesses(List<string> iList)
+        {
             foreach (string s in Properties.Settings.Default.IgnoreProcessList)
             {
-                if (!_ignoredProcessNames.Contains(s))
+                if (!iList.Contains(s.ToLower()))
                 {
-                    _ignoredProcessNames.Add(s);
+                    iList.Add(s.ToLower());
                 }
             }
-            if (!_ignoredProcessNames.Contains("system idle process"))
-                _ignoredProcessNames.Add("system idle process");
-            if (!_ignoredProcessNames.Contains("system"))
-                _ignoredProcessNames.Add("system");
-            if (!_ignoredProcessNames.Contains("wininit"))
-                _ignoredProcessNames.Add("wininit");
-            if (!_ignoredProcessNames.Contains("processarbiterservice"))
-                _ignoredProcessNames.Add("processarbiterservice");
-            if (!_ignoredProcessNames.Contains("taskmgr"))
-                _ignoredProcessNames.Add("taskmgr");
-            
+            if (!iList.Contains("system idle process"))
+                iList.Add("system idle process");
+            if (!iList.Contains("system"))
+                iList.Add("system");
+            if (!iList.Contains("wininit"))
+                iList.Add("wininit");
+            if (!iList.Contains("processarbiterservice"))
+                iList.Add("processarbiterservice");
+            if (!iList.Contains("taskmgr"))
+                iList.Add("taskmgr");
+            return iList;
+
         }
-        
+
+        private List<string> InitIncludedProcesses(List<string> iList)
+        {
+            foreach (string s in Properties.Settings.Default.IncludeProcessList)
+            {
+                if (!iList.Contains(s.ToLower()))
+                {
+                    iList.Add(s.ToLower());
+                }
+            }
+
+            return iList;
+        }
+
         private void InitPolicy()
         {
             _policy = new ProcessPolicy();
+            ProcessArbiterConfig paConfig = new ProcessArbiterConfig();
+            if (!_UsePolicyConfig)
+            {
+                _policy.GovernorProcessorPercent = (int)(Properties.Settings.Default.GovernorProcessorPercent / _numberOfProcessors);
+                _policy.GovernorTimeInterval = Properties.Settings.Default.GovernorTimeIntervalMilliseconds;
+                _policy.RelaxProcessorPercent = (int)(Properties.Settings.Default.RelaxProcessorPercent / _numberOfProcessors);
+                _policy.RelaxTimeInterval = Properties.Settings.Default.RelaxTimeIntervalMilliseconds;
 
-            _policy.GovernorProcessorPercent = (int)(Properties.Settings.Default.GovernorProcessorPercent / _numberOfProcessors);
-            _policy.GovernorTimeInterval = Properties.Settings.Default.GovernorTimeIntervalMilliseconds;
-            _policy.RelaxProcessorPercent = (int)(Properties.Settings.Default.RelaxProcessorPercent / _numberOfProcessors);
-            _policy.RelaxTimeInterval = Properties.Settings.Default.RelaxTimeIntervalMilliseconds;
-            
-            if (Properties.Settings.Default.WmiWatcherIntervalMilliseconds >= 1000)
-                _policy.WmiWatcherInterval = Properties.Settings.Default.WmiWatcherIntervalMilliseconds;
+                if (Properties.Settings.Default.WmiWatcherIntervalMilliseconds >= 1000)
+                    _policy.WmiWatcherInterval = Properties.Settings.Default.WmiWatcherIntervalMilliseconds;
+                else
+                    _policy.WmiWatcherInterval = 1000;
+                _policy.IgnoreProcesses = InitIgnoreProcesses(_policy.IgnoreProcesses);
+                _policy.IncludeProcesses = InitIncludedProcesses(_policy.IncludeProcesses);  
+            }
             else
-                _policy.WmiWatcherInterval = 1000;
+            {
+                
+                _policy = paConfig.Getconfig(_Settings);
+            }
 
         }
-        
-        
-        
-        
-        
+
+
+
+
+
         public void StartEngine()
         {
             if (_isRunning)
                 return;
 
             InitPolicy();
-            InitIgnoreProcesses();
 
             _loop = new Thread(new ThreadStart(RunLoop));
             _loop.Name = "PPO_Thread";
@@ -107,16 +141,16 @@ namespace ProcessArbiter
 
             _cleanupTimer.Start();
 
-            
+
         }
-        
+
         public void StopEngine()
         {
             _run = false;
 
             while (_isRunning)
                 Thread.Sleep(1000);
-            
+
 
             _cleanupTimer.Stop();
 
@@ -126,12 +160,16 @@ namespace ProcessArbiter
             {
                 _managedProcesses.Clear();
             }
-            if (_ignoredProcessNames != null)
+            if (_policy.IgnoreProcesses != null)
             {
-                _ignoredProcessNames.Clear();
+                _policy.IgnoreProcesses.Clear();
+            }
+            if (_policy.IncludeProcesses != null)
+            {
+                _policy.IncludeProcesses.Clear();
             }
         }
-        
+
         public string DumpEngine()
         {
             string governorTimeIntervalStr = string.Empty;
@@ -144,15 +182,22 @@ namespace ProcessArbiter
             log.Append("Process Policy:");
             log.Append("\r\n-----------------");
             log.Append("\r\nNumberOfLogicalProcessors: " + _numberOfProcessors.ToString());
-            log.Append("\r\nThe base priority of each process, which uses more than " + _policy.GovernorProcessorPercent.ToString() + "% CPU resources " );
+            log.Append("\r\nThe base priority of each process, which uses more than " + _policy.GovernorProcessorPercent.ToString() + "% CPU resources ");
             log.Append("for more than " + governorTimeIntervalStr + "ms, will be decreased.");
             log.Append("\r\nThe base priority of each process will go step by step back to its original state, if the process stays below " + _policy.RelaxProcessorPercent.ToString() + "% CPU usage ");
             log.Append("for more than " + _policy.RelaxTimeInterval.ToString() + "ms.");
             log.Append("\r\nThe policy above is applied every " + _policy.WmiWatcherInterval.ToString() + "ms.");
-           log.Append("\r\n");
+            log.Append("\r\n");
+            log.Append("\r\nIncluded Processes:");
+            log.Append("\r\n----------------------");
+            foreach (string IncludedProcess in _policy.IncludeProcesses)
+            {
+                log.Append("\r\n" + IncludedProcess);
+            }
+            log.Append("\r\n");
             log.Append("\r\nIgnored Processes:");
             log.Append("\r\n----------------------");
-            foreach (string ignoredProcess in _ignoredProcessNames)
+            foreach (string ignoredProcess in _policy.IgnoreProcesses)
             {
                 log.Append("\r\n" + ignoredProcess);
             }
@@ -185,10 +230,10 @@ namespace ProcessArbiter
                 }
                 else
                 {
-                     log.Append("\r\nCurrently there are no processes under observation.");
+                    log.Append("\r\nCurrently there are no processes under observation.");
                 }
             }
-            
+
             return (log.ToString());
         }
 
@@ -200,9 +245,9 @@ namespace ProcessArbiter
 
             Dictionary<int, PerfProcess> procList1 = GetProcessList();
 
-            
+
             Stopwatch stopwatch = System.Diagnostics.Stopwatch.StartNew();
-            
+
 
             while (_run)
             {
@@ -215,8 +260,16 @@ namespace ProcessArbiter
                 Process[] plist2 = Process.GetProcesses();
                 foreach (Process p2 in plist2)
                 {
-                    if (p2.Id == 0 || _ignoredProcessNames.Contains(p2.ProcessName.ToLower()))
-                        continue;
+                    if (_policy.IncludeProcesses.Count > 0)
+                    {
+                        if (p2.Id == 0 || _policy.IgnoreProcesses.Contains(p2.ProcessName.ToLower()) || !_policy.IncludeProcesses.Contains(p2.ProcessName.ToLower()))
+                            continue;
+                    }
+                    else
+                    {
+                        if (p2.Id == 0 || _policy.IgnoreProcesses.Contains(p2.ProcessName.ToLower()))
+                            continue;
+                    }
 
                     try
                     {
@@ -224,7 +277,8 @@ namespace ProcessArbiter
                         procList2.Add(proc.Id, proc);
 
                     }
-                    catch {
+                    catch
+                    {
                         continue;
                     }
 
@@ -237,7 +291,7 @@ namespace ProcessArbiter
                     {
                         tpt1 = proc1.TotalProcessorTimeInMilliseconds;
                     }
-                    
+
 
                     double processUsedProcessorTimeInMilliseconds = p2.TotalProcessorTime.TotalMilliseconds - tpt1;
                     double elapsedTime = stopwatch.Elapsed.TotalMilliseconds;
@@ -285,7 +339,7 @@ namespace ProcessArbiter
                                 DecrementProcessPriority(p2);
 
                                 mp.GovernorTimeInterval = 0;
-                                
+
                             }
                             else
                             {
@@ -326,7 +380,7 @@ namespace ProcessArbiter
                                 {
 
                                     _managedProcesses.Remove(p2.Id);
-                                    
+
                                 }
                             }
 
@@ -334,7 +388,7 @@ namespace ProcessArbiter
 
                     }
                     #endregion
-                    
+
                 }
 
 
@@ -349,7 +403,7 @@ namespace ProcessArbiter
         }
 
 
-        
+
 
 
         public void DecrementProcessPriority(Process process)
@@ -556,7 +610,7 @@ namespace ProcessArbiter
                 WriteLog(ex.ToString(), EventLogEntryType.Warning);
             }
         }
-       
+
 
         private void ResetAllProcessPriorities()
         {
@@ -575,7 +629,7 @@ namespace ProcessArbiter
             {
                 Dictionary<int, PerfProcess> processList = GetProcessList();
                 Process[] plist1 = Process.GetProcesses();
-                
+
 
                 try
                 {
@@ -586,7 +640,7 @@ namespace ProcessArbiter
                         {
                             ids.Add(kvp.Key);
                         }
-                        
+
                     }
                     foreach (int id in ids)
                     {
@@ -607,8 +661,16 @@ namespace ProcessArbiter
             Process[] plist1 = Process.GetProcesses();
             foreach (Process p in plist1)
             {
-                if (p.Id == 0 || _ignoredProcessNames.Contains(p.ProcessName))
-                    continue;
+                if (_policy.IncludeProcesses.Count > 0)
+                {
+                    if (p.Id == 0 || _policy.IgnoreProcesses.Contains(p.ProcessName.ToLower()) || !_policy.IncludeProcesses.Contains(p.ProcessName.ToLower()))
+                        continue;
+                }
+                else
+                {
+                    if (p.Id == 0 || _policy.IgnoreProcesses.Contains(p.ProcessName.ToLower()))
+                        continue;
+                }
 
                 try
                 {
@@ -637,8 +699,8 @@ namespace ProcessArbiter
                 _eventLog.WriteEntry(message, entryType);
             }
         }
-        
-            
-        
+
+
+
     }
 }

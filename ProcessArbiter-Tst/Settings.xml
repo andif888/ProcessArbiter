@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ProcessPolicy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <RelaxProcessorPercent>0</RelaxProcessorPercent>
+  <RelaxTimeInterval>4000</RelaxTimeInterval>
+  <GovernorProcessorPercent>0</GovernorProcessorPercent>
+  <GovernorTimeInterval>0</GovernorTimeInterval>
+  <WmiWatcherInterval>1000</WmiWatcherInterval>
+  <IgnoreProcesses>
+    <string>system idle process</string>
+    <string>system</string>
+    <string>wininit</string>
+    <string>processarbiterservice</string>
+    <string>taskmgr</string>
+  </IgnoreProcesses>
+  <IncludeProcesses>
+    <string>iexplore</string>
+  </IncludeProcesses>
+</ProcessPolicy>

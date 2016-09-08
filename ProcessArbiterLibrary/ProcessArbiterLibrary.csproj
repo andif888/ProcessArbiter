@@ -66,6 +66,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="PerfManagedProcess.cs" />
+    <Compile Include="ProcessArbiterConfig.cs" />
     <Compile Include="ProcessManagerEngine.cs" />
     <Compile Include="ProcessPolicy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

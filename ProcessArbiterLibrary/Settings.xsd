@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <xsd:element name="ProcessPolicy">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="RelaxProcessorPercent" type="xsd:unsignedByte" />
+        <xsd:element name="RelaxTimeInterval" type="xsd:unsignedShort" />
+        <xsd:element name="GovernorProcessorPercent" type="xsd:unsignedByte" />
+        <xsd:element name="GovernorTimeInterval" type="xsd:unsignedByte" />
+        <xsd:element name="WmiWatcherInterval" type="xsd:unsignedShort" />
+        <xsd:element name="IgnoreProcesses">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element maxOccurs="unbounded" name="string" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="IncludeProcesses">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="string" type="xsd:string" />
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xs:schema>
