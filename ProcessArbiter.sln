@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessArbiterResourceHog",
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ProcessArbiterSetup-x64", "ProcessArbiterSetup-x64\ProcessArbiterSetup-x64.vdproj", "{8DB88036-CCC0-4C49-99B9-12E6640C5814}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessArbiter-Tst", "K:\Downloads\ProcessArbiter\ProcessArbiter-master\ProcessArbiter-master\ProcessArbiter-Tst\ProcessArbiter-Tst.csproj", "{B7770369-B57E-4196-8064-FB820BD5E4AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessArbiter-Tst", "ProcessArbiter-Tst\ProcessArbiter-Tst.csproj", "{B7770369-B57E-4196-8064-FB820BD5E4AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
