@@ -48,13 +48,11 @@ namespace ProcessArbiter
 
         private List<string> InitIgnoreProcesses(List<string> iList)
         {
-           iList.Clear();
-
             foreach (string s in Properties.Settings.Default.IgnoreProcessList)
             {
-                if (!iList.Contains(s))
+                if (!iList.Contains(s.ToLower()))
                 {
-                    iList.Add(s);
+                    iList.Add(s.ToLower());
                 }
             }
             if (!iList.Contains("system idle process"))
@@ -73,13 +71,11 @@ namespace ProcessArbiter
 
         private List<string> InitIncludedProcesses(List<string> iList)
         {
-            iList.Clear();
-
             foreach (string s in Properties.Settings.Default.IncludeProcessList)
             {
-                if (!iList.Contains(s))
+                if (!iList.Contains(s.ToLower()))
                 {
-                    iList.Add(s);
+                    iList.Add(s.ToLower());
                 }
             }
 
@@ -100,7 +96,7 @@ namespace ProcessArbiter
             else
                 _policy.WmiWatcherInterval = 1000;
             _policy.IgnoreProcesses = InitIgnoreProcesses(_policy.IgnoreProcesses);
-            _policy.IncludeProcesses = InitIgnoreProcesses(_policy.IncludeProcesses);
+            _policy.IncludeProcesses = InitIncludedProcesses(_policy.IncludeProcesses);
 
         }
 
