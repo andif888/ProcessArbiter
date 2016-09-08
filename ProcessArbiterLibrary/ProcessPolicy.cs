@@ -6,14 +6,14 @@ using System.Text;
 
 namespace ProcessArbiter
 {
-    internal class ProcessPolicy
+    public class ProcessPolicy
     {
-        internal int RelaxProcessorPercent;
-        internal double RelaxTimeInterval;
-        internal int GovernorProcessorPercent;
-        internal double GovernorTimeInterval;
-        internal int WmiWatcherInterval;
-        internal List<string> IgnoreProcesses = new List<string>();
-        internal List<string> IncludeProcesses = new List<string>();
+        public int RelaxProcessorPercent;
+        public double RelaxTimeInterval;
+        public int GovernorProcessorPercent;
+        public double GovernorTimeInterval;
+        public int WmiWatcherInterval;
+        public List<string> IgnoreProcesses = new List<string>();
+        public List<string> IncludeProcesses = new List<string>();
     }
 }

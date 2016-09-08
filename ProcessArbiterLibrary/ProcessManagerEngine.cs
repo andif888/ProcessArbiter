@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 
 namespace ProcessArbiter
 {
@@ -17,6 +19,19 @@ namespace ProcessArbiter
         private ProcessPolicy _policy = null;
         private Dictionary<int, PerfManagedProcess> _managedProcesses = new Dictionary<int, PerfManagedProcess>();
         private EventLog _eventLog = null;
+        private bool _UsePolicyConfig = false;
+        public bool UsePolicyConfig
+        {
+            get
+            {
+                return _UsePolicyConfig;
+            }
+            set
+            {
+                _UsePolicyConfig = value;
+            }
+        }
+        private string _Settings = "";
         private System.Timers.Timer _cleanupTimer;
 
         public bool Simulate
@@ -30,6 +45,7 @@ namespace ProcessArbiter
         public ProcessManagerEngine(EventLog eventLog)
         {
             _numberOfProcessors = Environment.ProcessorCount;
+            _Settings = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\Settings.xml";
             _eventLog = eventLog;
             _cleanupTimer = new System.Timers.Timer(Properties.Settings.Default.CleanupTimeInterval);
             _cleanupTimer.Elapsed += new System.Timers.ElapsedEventHandler(CleanupTimer_Elapsed);
@@ -85,18 +101,26 @@ namespace ProcessArbiter
         private void InitPolicy()
         {
             _policy = new ProcessPolicy();
+            ProcessArbiterConfig paConfig = new ProcessArbiterConfig();
+            if (!_UsePolicyConfig)
+            {
+                _policy.GovernorProcessorPercent = (int)(Properties.Settings.Default.GovernorProcessorPercent / _numberOfProcessors);
+                _policy.GovernorTimeInterval = Properties.Settings.Default.GovernorTimeIntervalMilliseconds;
+                _policy.RelaxProcessorPercent = (int)(Properties.Settings.Default.RelaxProcessorPercent / _numberOfProcessors);
+                _policy.RelaxTimeInterval = Properties.Settings.Default.RelaxTimeIntervalMilliseconds;
 
-            _policy.GovernorProcessorPercent = (int)(Properties.Settings.Default.GovernorProcessorPercent / _numberOfProcessors);
-            _policy.GovernorTimeInterval = Properties.Settings.Default.GovernorTimeIntervalMilliseconds;
-            _policy.RelaxProcessorPercent = (int)(Properties.Settings.Default.RelaxProcessorPercent / _numberOfProcessors);
-            _policy.RelaxTimeInterval = Properties.Settings.Default.RelaxTimeIntervalMilliseconds;
-
-            if (Properties.Settings.Default.WmiWatcherIntervalMilliseconds >= 1000)
-                _policy.WmiWatcherInterval = Properties.Settings.Default.WmiWatcherIntervalMilliseconds;
+                if (Properties.Settings.Default.WmiWatcherIntervalMilliseconds >= 1000)
+                    _policy.WmiWatcherInterval = Properties.Settings.Default.WmiWatcherIntervalMilliseconds;
+                else
+                    _policy.WmiWatcherInterval = 1000;
+                _policy.IgnoreProcesses = InitIgnoreProcesses(_policy.IgnoreProcesses);
+                _policy.IncludeProcesses = InitIncludedProcesses(_policy.IncludeProcesses);  
+            }
             else
-                _policy.WmiWatcherInterval = 1000;
-            _policy.IgnoreProcesses = InitIgnoreProcesses(_policy.IgnoreProcesses);
-            _policy.IncludeProcesses = InitIncludedProcesses(_policy.IncludeProcesses);
+            {
+                
+                _policy = paConfig.Getconfig(_Settings);
+            }
 
         }
 

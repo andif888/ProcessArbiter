@@ -9,22 +9,19 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Windows.Forms;
 using ProcessArbiter;
-using System.IO;
-using System.Reflection;
 
 
 namespace ProcessArbiter_Tst
 {
     public partial class Form1 : Form
     {
-        private string _dumpFile;
 
         EventLog evtlog;
         private ProcessManagerEngine _engine = null;
         public Form1()
         {
-            _dumpFile = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\dump.log";
             evtlog = new EventLog("Application");
+            evtlog.Source = "ProcessArbiter";
             InitializeComponent();
         }
 

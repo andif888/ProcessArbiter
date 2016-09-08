@@ -13,13 +13,14 @@ namespace ProcessArbiterService
     public partial class Service1 : ServiceBase
     {
         private string _dumpFile;
-       
+        private bool _defaultSettings = true;
 
         private ProcessManagerEngine _engine = null;
 
         public Service1()
         {
             _dumpFile = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + "\\dump.log";
+            _defaultSettings = Properties.Settings.Default.UseDefaultSettings;
 
             InitializeComponent();
         }
@@ -32,6 +33,7 @@ namespace ProcessArbiterService
                 {
                     
                         _engine = new ProcessManagerEngine(this.EventLog);
+                    _engine.UsePolicyConfig = _defaultSettings;
                    
                 }
 
