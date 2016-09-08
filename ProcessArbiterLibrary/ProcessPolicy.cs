@@ -13,5 +13,7 @@ namespace ProcessArbiter
         internal int GovernorProcessorPercent;
         internal double GovernorTimeInterval;
         internal int WmiWatcherInterval;
+        internal List<string> IgnoreProcesses;
+        internal List<string> IncludeProcesses;
     }
 }

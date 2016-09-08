@@ -15,8 +15,6 @@ namespace ProcessArbiter
         private int _numberOfProcessors = 1;
 
         private ProcessPolicy _policy = null;
-        private List<string> _ignoredProcessNames = new List<string>();
-        private List<string> _includeProcessNames = new List<string>();
         private Dictionary<int, PerfManagedProcess> _managedProcesses = new Dictionary<int, PerfManagedProcess>();
         private EventLog _eventLog = null;
         private System.Timers.Timer _cleanupTimer;
@@ -48,41 +46,44 @@ namespace ProcessArbiter
         }
 
 
-        private void InitIgnoreProcesses()
+        private List<string> InitIgnoreProcesses(List<string> iList)
         {
-            _ignoredProcessNames.Clear();
+           iList.Clear();
 
             foreach (string s in Properties.Settings.Default.IgnoreProcessList)
             {
-                if (!_ignoredProcessNames.Contains(s))
+                if (!iList.Contains(s))
                 {
-                    _ignoredProcessNames.Add(s);
+                    iList.Add(s);
                 }
             }
-            if (!_ignoredProcessNames.Contains("system idle process"))
-                _ignoredProcessNames.Add("system idle process");
-            if (!_ignoredProcessNames.Contains("system"))
-                _ignoredProcessNames.Add("system");
-            if (!_ignoredProcessNames.Contains("wininit"))
-                _ignoredProcessNames.Add("wininit");
-            if (!_ignoredProcessNames.Contains("processarbiterservice"))
-                _ignoredProcessNames.Add("processarbiterservice");
-            if (!_ignoredProcessNames.Contains("taskmgr"))
-                _ignoredProcessNames.Add("taskmgr");
+            if (!iList.Contains("system idle process"))
+                iList.Add("system idle process");
+            if (!iList.Contains("system"))
+                iList.Add("system");
+            if (!iList.Contains("wininit"))
+                iList.Add("wininit");
+            if (!iList.Contains("processarbiterservice"))
+                iList.Add("processarbiterservice");
+            if (!iList.Contains("taskmgr"))
+                iList.Add("taskmgr");
+            return iList;
 
         }
 
-        private void InitIncludedProcesses()
+        private List<string> InitIncludedProcesses(List<string> iList)
         {
-            _includeProcessNames.Clear();
+            iList.Clear();
 
             foreach (string s in Properties.Settings.Default.IncludeProcessList)
             {
-                if (!_includeProcessNames.Contains(s))
+                if (!iList.Contains(s))
                 {
-                    _includeProcessNames.Add(s);
+                    iList.Add(s);
                 }
             }
+
+            return iList;
         }
 
         private void InitPolicy()
@@ -98,6 +99,8 @@ namespace ProcessArbiter
                 _policy.WmiWatcherInterval = Properties.Settings.Default.WmiWatcherIntervalMilliseconds;
             else
                 _policy.WmiWatcherInterval = 1000;
+            _policy.IgnoreProcesses = InitIgnoreProcesses(_policy.IgnoreProcesses);
+            _policy.IncludeProcesses = InitIgnoreProcesses(_policy.IncludeProcesses);
 
         }
 
@@ -111,8 +114,6 @@ namespace ProcessArbiter
                 return;
 
             InitPolicy();
-            InitIgnoreProcesses();
-            InitIncludedProcesses();
 
             _loop = new Thread(new ThreadStart(RunLoop));
             _loop.Name = "PPO_Thread";
@@ -139,13 +140,13 @@ namespace ProcessArbiter
             {
                 _managedProcesses.Clear();
             }
-            if (_ignoredProcessNames != null)
+            if (_policy.IgnoreProcesses != null)
             {
-                _ignoredProcessNames.Clear();
+                _policy.IgnoreProcesses.Clear();
             }
-            if (_includeProcessNames != null)
+            if (_policy.IncludeProcesses != null)
             {
-                _includeProcessNames.Clear();
+                _policy.IncludeProcesses.Clear();
             }
         }
 
@@ -169,14 +170,14 @@ namespace ProcessArbiter
             log.Append("\r\n");
             log.Append("\r\nIncluded Processes:");
             log.Append("\r\n----------------------");
-            foreach (string IncludedProcess in _includeProcessNames)
+            foreach (string IncludedProcess in _policy.IncludeProcesses)
             {
                 log.Append("\r\n" + IncludedProcess);
             }
             log.Append("\r\n");
             log.Append("\r\nIgnored Processes:");
             log.Append("\r\n----------------------");
-            foreach (string ignoredProcess in _ignoredProcessNames)
+            foreach (string ignoredProcess in _policy.IgnoreProcesses)
             {
                 log.Append("\r\n" + ignoredProcess);
             }
@@ -239,14 +240,14 @@ namespace ProcessArbiter
                 Process[] plist2 = Process.GetProcesses();
                 foreach (Process p2 in plist2)
                 {
-                    if (_includeProcessNames.Count > 0)
+                    if (_policy.IncludeProcesses.Count > 0)
                     {
-                        if (p2.Id == 0 || _ignoredProcessNames.Contains(p2.ProcessName.ToLower()) || !_includeProcessNames.Contains(p2.ProcessName.ToLower()))
+                        if (p2.Id == 0 || _policy.IgnoreProcesses.Contains(p2.ProcessName.ToLower()) || !_policy.IncludeProcesses.Contains(p2.ProcessName.ToLower()))
                             continue;
                     }
                     else
                     {
-                        if (p2.Id == 0 || _ignoredProcessNames.Contains(p2.ProcessName.ToLower()))
+                        if (p2.Id == 0 || _policy.IgnoreProcesses.Contains(p2.ProcessName.ToLower()))
                             continue;
                     }
 
@@ -640,14 +641,14 @@ namespace ProcessArbiter
             Process[] plist1 = Process.GetProcesses();
             foreach (Process p in plist1)
             {
-                if (_includeProcessNames.Count > 0)
+                if (_policy.IncludeProcesses.Count > 0)
                 {
-                    if (p.Id == 0 || _ignoredProcessNames.Contains(p.ProcessName.ToLower()) || !_includeProcessNames.Contains(p.ProcessName.ToLower()))
+                    if (p.Id == 0 || _policy.IgnoreProcesses.Contains(p.ProcessName.ToLower()) || !_policy.IncludeProcesses.Contains(p.ProcessName.ToLower()))
                         continue;
                 }
                 else
                 {
-                    if (p.Id == 0 || _ignoredProcessNames.Contains(p.ProcessName.ToLower()))
+                    if (p.Id == 0 || _policy.IgnoreProcesses.Contains(p.ProcessName.ToLower()))
                         continue;
                 }
 
