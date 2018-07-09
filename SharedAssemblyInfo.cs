@@ -13,4 +13,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("ProcessArbiter")]
 [assembly: AssemblyCopyright("Copyright © 2011 Andreas Fleischmann")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyVersion("2.1.4.0")]
+[assembly: AssemblyVersion("2.1.5.0")]

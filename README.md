@@ -11,9 +11,8 @@ The best news is, that there is no complicated configuration in ProcessArbiter. 
 Any of the following operation systems:
 Windows 2000, Windows XP (x86, x64), Windows Vista (x86, x64), Windows 7 (x86, x64), Window 8 (x86, x64), Windows 8.1 (x86, x64), Windows 10 (x86, x64)
 Windows 2000 Server, Windows Server 2003 (x86, x64), Windows Server 2008 (x86, x64), 
-Windows Server 2008 R2, Windows Server 2012, Windows Server 2012 R2 
+Windows Server 2008 R2, Windows Server 2012, Windows Server 2012 R2, Windows Server 2016
 
-Microsoft .NET Framework 2.0 or above
 
 ### Download and Installation:
 Download the [ProcessArbiterSetup-x86.zip](https://github.com/andif888/ProcessArbiter/blob/master/ProcessArbiterSetup-x86.zip) for 32-bit Windows, extract the contents and run setup.exe.

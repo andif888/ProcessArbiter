@@ -58,7 +58,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B01D91EE009E40A7B313EE9C09D0CE03"
+        "OwnerKey" = "8:_1133AF9B537B4BE0FCC6F952B34F3EEF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -70,7 +70,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_1133AF9B537B4BE0FCC6F952B34F3EEF"
+        "OwnerKey" = "8:_B01D91EE009E40A7B313EE9C09D0CE03"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -193,7 +193,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:2.0.50727            "
+                "FrameworkVersion" = "8:2.0.50727             "
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=76617"
                 }
@@ -208,11 +208,6 @@
             "AssemblyAsmDisplayName" = "8:ProcessArbiter, Version=2.1.4.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_1133AF9B537B4BE0FCC6F952B34F3EEF"
-                    {
-                    "Name" = "8:ProcessArbiter.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:ProcessArbiter.dll"
             "TargetName" = "8:"
@@ -339,15 +334,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ProcessArbiter"
-        "ProductCode" = "8:{9CE9E2F4-D76A-4164-91CC-028B49BE59A9}"
-        "PackageCode" = "8:{5F0399D5-E42C-453C-ADB8-F679171794B1}"
+        "ProductCode" = "8:{FAB07D2D-9BFF-4CA8-B24E-C9BBF319F7CF}"
+        "PackageCode" = "8:{12B33F81-6785-4B6C-A6B3-878C096CD5F1}"
         "UpgradeCode" = "8:{308015CA-53E1-485F-9F36-8D4E1A54CE97}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:2.1.4"
+        "ProductVersion" = "8:2.1.5"
         "Manufacturer" = "8:Fleischmann"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:https://github.com/andif888/processarbiter"
