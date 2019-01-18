@@ -16,7 +16,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\finn.snk</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <PublishUrl>publish\</PublishUrl>
@@ -58,8 +58,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SharedAssemblyFileVersionInfo.cs">
@@ -94,12 +96,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ProcessArbiterLibrary\ProcessArbiterLibrary.csproj">
-      <Project>{2676B1D6-D3D8-4383-9313-27AA6FBB736F}</Project>
-      <Name>ProcessArbiterLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
@@ -131,10 +127,15 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ProcessArbiterLibrary\ProcessArbiterLibrary.csproj">
+      <Project>{2676b1d6-d3d8-4383-9313-27aa6fbb736f}</Project>
+      <Name>ProcessArbiterLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>"%25ProgramFiles%25\Windows Kits\10\bin\10.0.16299.0\x86\signtool.exe" sign /f "$(SolutionDir)\andreas-fleischmann-s-inn-de-codesign.p12" /d "ProcessArbiter" /p "RS4|RS6" /du "http://www.prianto.com/ProcessArbiter/" /t "http://timestamp.verisign.com/scripts/timstamp.dll" $(TargetPath)</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

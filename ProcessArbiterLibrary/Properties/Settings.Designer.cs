@@ -70,26 +70,26 @@ namespace ProcessArbiter.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
-<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <string>System Idle Process</string>
-  <string>System</string>
-  <string>wininit</string>
-  <string>ProcessPriorityObserverService</string>
-  <string>taskmgr</string>
-</ArrayOfString>")]
-        public global::System.Collections.Specialized.StringCollection IgnoreProcessList {
+        [global::System.Configuration.DefaultSettingValueAttribute("16473")]
+        public int CleanupTimeInterval {
             get {
-                return ((global::System.Collections.Specialized.StringCollection)(this["IgnoreProcessList"]));
+                return ((int)(this["CleanupTimeInterval"]));
             }
         }
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("16473")]
-        public int CleanupTimeInterval {
+        [global::System.Configuration.DefaultSettingValueAttribute(@"<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOfString xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
+  <string>system idle process</string>
+  <string>system</string>
+  <string>wininit</string>
+  <string>processarbiterservice</string>
+  <string>taskmgr</string>
+</ArrayOfString>")]
+        public global::System.Collections.Specialized.StringCollection IgnoreProcessList {
             get {
-                return ((int)(this["CleanupTimeInterval"]));
+                return ((global::System.Collections.Specialized.StringCollection)(this["IgnoreProcessList"]));
             }
         }
     }

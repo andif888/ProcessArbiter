@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ProcessPriorityObserver.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ProcessArbiter.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="RelaxTimeIntervalMilliseconds" Type="System.Int32" Scope="Application">
@@ -17,18 +17,18 @@
     <Setting Name="GovernorProcessorPercent" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">30</Value>
     </Setting>
+    <Setting Name="CleanupTimeInterval" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">16473</Value>
+    </Setting>
     <Setting Name="IgnoreProcessList" Type="System.Collections.Specialized.StringCollection" Scope="Application">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;string&gt;System Idle Process&lt;/string&gt;
-  &lt;string&gt;System&lt;/string&gt;
+  &lt;string&gt;system idle process&lt;/string&gt;
+  &lt;string&gt;system&lt;/string&gt;
   &lt;string&gt;wininit&lt;/string&gt;
-  &lt;string&gt;ProcessPriorityObserverService&lt;/string&gt;
+  &lt;string&gt;processarbiterservice&lt;/string&gt;
   &lt;string&gt;taskmgr&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
-    </Setting>
-    <Setting Name="CleanupTimeInterval" Type="System.Int32" Scope="Application">
-      <Value Profile="(Default)">16473</Value>
     </Setting>
   </Settings>
 </SettingsFile>
